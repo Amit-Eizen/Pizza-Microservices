@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+  <div class="page-header">
+    <h1>🍕 Our Menu</h1>
+    <p>Choose your favorite pizza</p>
+  </div>
+
+  <div class="menu-grid">
+    <% pizzas.forEach(pizza => { %>
+      <div class="pizza-card">
+        <img src="<%= pizza.image %>" alt="<%= pizza.name %>" class="pizza-image">
+        <div class="pizza-details">
+          <h3><%= pizza.name %></h3>
+          <p><%= pizza.description %></p>
+          <div class="pizza-price">₪<%= pizza.price %></div>
+          <button class="btn btn-primary">Order Now</button>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
