@@ -29,7 +29,7 @@ exports.getMenuPage = (req, res) => {
     }
   ];
 
-  res.render('menu/menu', {
+  res.render('menu', {
     title: 'Menu',
     pizzas: pizzas
   });

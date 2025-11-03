@@ -28,7 +28,7 @@ app.use('/orders', orderRoutes);
 
 // Home route
 app.get('/', (req, res) => {
-  res.redirect('/login');
+  res.render('home', { title: 'Home' });
 });
 
 // 404 handler

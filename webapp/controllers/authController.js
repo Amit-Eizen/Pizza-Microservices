@@ -2,7 +2,7 @@
 
 // Display auth page (both login and register in one page)
 exports.getAuthPage = (req, res) => {
-  res.render('auth/login', {
+  res.render('login', {
     title: 'Authentication',
     error: null
   });
@@ -23,7 +23,7 @@ exports.handleLogin = async (req, res) => {
 
   } catch (error) {
     console.error('Login error:', error);
-    res.render('auth/login', {
+    res.render('login', {
       title: 'Login',
       error: 'Login failed. Please try again.'
     });
@@ -43,7 +43,7 @@ exports.handleRegister = async (req, res) => {
 
   } catch (error) {
     console.error('Register error:', error);
-    res.render('auth/register', {
+    res.render('login', {
       title: 'Register',
       error: 'Registration failed. Please try again.'
     });
