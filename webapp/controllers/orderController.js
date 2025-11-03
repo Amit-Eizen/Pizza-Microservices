@@ -24,7 +24,7 @@ exports.getOrdersPage = (req, res) => {
     }
   ];
 
-  res.render('orders/orders', {
+  res.render('orders', {
     title: 'My Orders',
     orders: orders
   });
