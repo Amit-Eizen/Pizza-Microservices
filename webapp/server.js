@@ -28,7 +28,11 @@ app.use('/orders', orderRoutes);
 
 // Home route
 app.get('/', (req, res) => {
-  res.render('home', { title: 'Home' });
+  res.render('home', {
+    title: 'Home',
+    pageCSS: 'home',
+    currentPage: 'home'
+  });
 });
 
 // 404 handler

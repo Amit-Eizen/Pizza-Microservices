@@ -31,6 +31,8 @@ exports.getMenuPage = (req, res) => {
 
   res.render('menu', {
     title: 'Menu',
-    pizzas: pizzas
+    pizzas: pizzas,
+    pageCSS: 'menu',
+    currentPage: 'menu'
   });
 };
