@@ -6,9 +6,19 @@ const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'http://localhost:3001/
 
 // Display auth page (both login and register in one page)
 exports.getAuthPage = (req, res) => {
+  // Check if user is already logged in
+  const isLoggedIn = !!req.cookies.token;
+
+  // If already logged in, redirect to home
+  if (isLoggedIn) {
+    return res.redirect('/');
+  }
+
   res.render('login', {
     title: 'Authentication',
-    error: null
+    error: null,
+    isLoggedIn: false,
+    currentPage: 'login'
   });
 };
 
@@ -34,7 +44,7 @@ exports.handleLogin = async (req, res) => {
       // Store user info in session (optional, or send to frontend)
       console.log('User logged in:', response.data.user.email);
 
-      res.redirect('/menu');
+      res.redirect('/');
     } else {
       throw new Error('Invalid response from Auth Service');
     }
@@ -46,7 +56,9 @@ exports.handleLogin = async (req, res) => {
 
     res.render('login', {
       title: 'Authentication',
-      error: errorMessage
+      error: errorMessage,
+      isLoggedIn: false,
+      currentPage: 'login'
     });
   }
 };
@@ -73,8 +85,8 @@ exports.handleRegister = async (req, res) => {
 
       console.log('User registered:', response.data.user.email);
 
-      // Redirect to menu after successful registration
-      res.redirect('/menu');
+      // Redirect to home after successful registration
+      res.redirect('/');
     } else {
       throw new Error('Invalid response from Auth Service');
     }
@@ -86,7 +98,9 @@ exports.handleRegister = async (req, res) => {
 
     res.render('login', {
       title: 'Authentication',
-      error: errorMessage
+      error: errorMessage,
+      isLoggedIn: false,
+      currentPage: 'login'
     });
   }
 };
@@ -94,5 +108,5 @@ exports.handleRegister = async (req, res) => {
 // Handle logout
 exports.handleLogout = (req, res) => {
   res.clearCookie('token');
-  res.redirect('/login');
+  res.redirect('/');
 };

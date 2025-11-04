@@ -7,6 +7,9 @@ const MENU_SERVICE_URL = process.env.MENU_SERVICE_URL || 'http://localhost:3002/
 // Display menu page
 exports.getMenuPage = async (req, res) => {
   try {
+    // Check if user is logged in
+    const isLoggedIn = !!req.cookies.token;
+
     // Fetch pizzas from Menu Service
     const response = await axios.get(MENU_SERVICE_URL);
 
@@ -30,11 +33,15 @@ exports.getMenuPage = async (req, res) => {
       title: 'Menu',
       pizzas: pizzas,
       pageCSS: 'menu',
-      currentPage: 'menu'
+      currentPage: 'menu',
+      isLoggedIn: isLoggedIn
     });
 
   } catch (error) {
     console.error('Error fetching menu:', error.message);
+
+    // Check if user is logged in
+    const isLoggedIn = !!req.cookies.token;
 
     // Fallback to empty array if Menu Service is down
     res.render('menu', {
@@ -42,6 +49,7 @@ exports.getMenuPage = async (req, res) => {
       pizzas: [],
       pageCSS: 'menu',
       currentPage: 'menu',
+      isLoggedIn: isLoggedIn,
       error: 'Unable to load menu. Please try again later.'
     });
   }

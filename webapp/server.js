@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -28,10 +29,14 @@ app.use('/orders', orderRoutes);
 
 // Home route
 app.get('/', (req, res) => {
+  // Check if user is logged in (has token cookie)
+  const isLoggedIn = !!req.cookies.token;
+
   res.render('home', {
     title: 'Home',
     pageCSS: 'home',
-    currentPage: 'home'
+    currentPage: 'home',
+    isLoggedIn: isLoggedIn
   });
 });
 

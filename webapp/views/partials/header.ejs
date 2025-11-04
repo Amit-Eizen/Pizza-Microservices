@@ -16,16 +16,17 @@
         <h2>🍕 Pizza Microservices</h2>
       </div>
       <ul class="nav-menu">
-        <% if (currentPage === 'home') { %>
-          <!-- Home page - show Login button -->
-          <li><a href="/menu">Menu</a></li>
-          <li><a href="/login">Login</a></li>
-        <% } else { %>
-          <!-- Authenticated pages - show full menu -->
+        <% if (typeof isLoggedIn !== 'undefined' && isLoggedIn) { %>
+          <!-- Logged in users -->
           <li><a href="/">Home</a></li>
           <li><a href="/menu">Menu</a></li>
           <li><a href="/orders">My Orders</a></li>
           <li><a href="/logout">Logout</a></li>
+        <% } else { %>
+          <!-- Guest users -->
+          <li><a href="/">Home</a></li>
+          <li><a href="/menu">Menu</a></li>
+          <li><a href="/login">Login</a></li>
         <% } %>
       </ul>
     </div>
