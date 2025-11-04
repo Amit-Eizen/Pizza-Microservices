@@ -1,24 +1,60 @@
-<%- include('../partials/header') %>
-
-<div class="container">
-  <div class="page-header">
-    <h1>🍕 Our Menu</h1>
-    <p>Choose your favorite pizza</p>
-  </div>
-
-  <div class="menu-grid">
-    <% pizzas.forEach(pizza => { %>
-      <div class="pizza-card">
-        <img src="<%= pizza.image %>" alt="<%= pizza.name %>" class="pizza-image">
-        <div class="pizza-details">
-          <h3><%= pizza.name %></h3>
-          <p><%= pizza.description %></p>
-          <div class="pizza-price">₪<%= pizza.price %></div>
-          <button class="btn btn-primary">Order Now</button>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Pizza Microservices</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <h2>🍕 Pizza Microservices</h2>
       </div>
-    <% }); %>
-  </div>
-</div>
+      <ul class="nav-menu">
+        <li><a href="/">Home</a></li>
+        <li><a href="/menu">Menu</a></li>
+        <li><a href="/orders">My Orders</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
 
-<%- include('../partials/footer') %>
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+      <div class="page-header">
+        <h1>🍕 Our Pizza Menu</h1>
+        <p>Choose your favorite pizza and order now!</p>
+      </div>
+
+      <div class="menu-grid">
+        <% pizzas.forEach(pizza => { %>
+          <div class="pizza-card">
+            <div class="pizza-image-container">
+              <img src="<%= pizza.image %>" alt="<%= pizza.name %>" class="pizza-image">
+            </div>
+            <div class="pizza-details">
+              <h3><%= pizza.name %></h3>
+              <p class="pizza-description"><%= pizza.description %></p>
+              <div class="pizza-footer">
+                <div class="pizza-price">₪<%= pizza.price %></div>
+                <button class="btn btn-primary">Order Now</button>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Pizza Microservices. Built with Node.js, Express, MongoDB, Docker & Kubernetes.</p>
+    </div>
+  </footer>
+</body>
+</html>
