@@ -37,3 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleLink = document.getElementById('auth-toggle-link');
   toggleLink.addEventListener('click', toggleForms);
 });
+
+// Function to toggle password visibility
+function togglePassword(inputId) {
+  const input = document.getElementById(inputId);
+  const button = input.nextElementSibling;
+
+  if (input.type === 'password') {
+    input.type = 'text';
+    button.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    button.textContent = '👁️';
+  }
+}
