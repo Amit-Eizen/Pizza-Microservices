@@ -3,12 +3,21 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
-      <h1 class="hero-title">🍕 Welcome to Pizza Microservices</h1>
-      <p class="hero-subtitle">Delicious pizzas delivered with cutting-edge technology</p>
-      <div class="hero-buttons">
-        <a href="/menu" class="btn btn-primary btn-large">Order Now</a>
-        <a href="/login" class="btn btn-secondary btn-large">Sign In</a>
-      </div>
+      <% if (isLoggedIn) { %>
+        <h1 class="hero-title">🍕 Welcome Back!</h1>
+        <p class="hero-subtitle">Ready to order your favorite pizza?</p>
+        <div class="hero-buttons">
+          <a href="/menu" class="btn btn-primary btn-large">Browse Menu</a>
+          <a href="/orders" class="btn btn-secondary btn-large">My Orders</a>
+        </div>
+      <% } else { %>
+        <h1 class="hero-title">🍕 Welcome to Pizza Microservices</h1>
+        <p class="hero-subtitle">Delicious pizzas delivered with cutting-edge technology</p>
+        <p class="hero-subtitle">Sign in to start ordering your favorite pizzas!</p>
+        <div class="hero-buttons">
+          <a href="/login" class="btn btn-primary btn-large">Get Started</a>
+        </div>
+      <% } %>
     </div>
   </section>
 
