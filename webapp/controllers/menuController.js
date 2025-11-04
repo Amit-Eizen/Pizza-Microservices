@@ -1,38 +1,48 @@
 // Menu Controller - handles menu display logic
+const axios = require('axios');
+
+// Menu Service URL (will be replaced by API Gateway later)
+const MENU_SERVICE_URL = process.env.MENU_SERVICE_URL || 'http://localhost:3002/api/menu';
 
 // Display menu page
-exports.getMenuPage = (req, res) => {
-  // TODO: Fetch pizzas from Menu Service via API Gateway
+exports.getMenuPage = async (req, res) => {
+  try {
+    // Fetch pizzas from Menu Service
+    const response = await axios.get(MENU_SERVICE_URL);
 
-  // Mock data for now
-  const pizzas = [
-    {
-      id: 1,
-      name: 'Margherita',
-      description: 'Classic tomato sauce, mozzarella, and basil',
-      price: 45,
-      image: '/images/margherita.jpg'
-    },
-    {
-      id: 2,
-      name: 'Pepperoni',
-      description: 'Tomato sauce, mozzarella, and pepperoni',
-      price: 55,
-      image: '/images/pepperoni.jpg'
-    },
-    {
-      id: 3,
-      name: 'Vegetarian',
-      description: 'Tomato sauce, mozzarella, peppers, mushrooms, olives',
-      price: 50,
-      image: '/images/vegetarian.jpg'
+    let pizzas = [];
+
+    if (response.data.success && response.data.data) {
+      // Map MongoDB data to match frontend expectations
+      pizzas = response.data.data.map(pizza => ({
+        id: pizza._id,
+        name: pizza.name,
+        description: pizza.description,
+        price: pizza.price,
+        image: pizza.image,
+        category: pizza.category,
+        ingredients: pizza.ingredients,
+        available: pizza.available
+      }));
     }
-  ];
 
-  res.render('menu', {
-    title: 'Menu',
-    pizzas: pizzas,
-    pageCSS: 'menu',
-    currentPage: 'menu'
-  });
+    res.render('menu', {
+      title: 'Menu',
+      pizzas: pizzas,
+      pageCSS: 'menu',
+      currentPage: 'menu'
+    });
+
+  } catch (error) {
+    console.error('Error fetching menu:', error.message);
+
+    // Fallback to empty array if Menu Service is down
+    res.render('menu', {
+      title: 'Menu',
+      pizzas: [],
+      pageCSS: 'menu',
+      currentPage: 'menu',
+      error: 'Unable to load menu. Please try again later.'
+    });
+  }
 };
