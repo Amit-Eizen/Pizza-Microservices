@@ -12,7 +12,7 @@ exports.getOrdersPage = (req, res) => {
       quantity: 2,
       totalPrice: 90,
       status: 'Delivered',
-      createdAt: '2024-11-01'
+      createdAt: '2025-11-01'
     },
     {
       id: 2,
@@ -20,12 +20,22 @@ exports.getOrdersPage = (req, res) => {
       quantity: 1,
       totalPrice: 55,
       status: 'Preparing',
-      createdAt: '2024-11-03'
+      createdAt: '2025-11-03'
+    },
+    {
+      id: 3,
+      pizzaName: 'Vegetarian',
+      quantity: 3,
+      totalPrice: 150,
+      status: 'Pending',
+      createdAt: '2025-11-04'
     }
   ];
 
   res.render('orders', {
     title: 'My Orders',
-    orders: orders
+    orders: orders,
+    pageCSS: 'orders',
+    currentPage: 'orders'
   });
 };

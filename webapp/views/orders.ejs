@@ -1,0 +1,40 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="page-header">
+    <h1>📦 My Orders</h1>
+    <p>Track your pizza orders</p>
+  </div>
+
+  <% if (orders.length === 0) { %>
+    <div class="empty-state">
+      <h2>No orders yet</h2>
+      <p>Start by ordering some delicious pizza!</p>
+      <a href="/menu" class="btn btn-primary">View Menu</a>
+    </div>
+  <% } else { %>
+    <div class="orders-container">
+      <% orders.forEach(order => { %>
+        <div class="order-card">
+          <div class="order-header">
+            <div>
+              <h3>Order #<%= order.id %></h3>
+              <p class="order-date"><%= order.createdAt %></p>
+            </div>
+            <span class="order-status status-<%= order.status.toLowerCase() %>">
+              <%= order.status %>
+            </span>
+          </div>
+
+          <div class="order-details">
+            <p><strong>Pizza:</strong> <%= order.pizzaName %></p>
+            <p><strong>Quantity:</strong> <%= order.quantity %></p>
+            <p><strong>Total Price:</strong> ₪<%= order.totalPrice %></p>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
