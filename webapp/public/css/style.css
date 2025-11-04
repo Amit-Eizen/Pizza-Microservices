@@ -212,39 +212,72 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   overflow: hidden;
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
 }
 
 .pizza-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+.pizza-image-container {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background-color: #f8f9fa;
 }
 
 .pizza-image {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
-  background-color: #f0f0f0;
+  transition: transform 0.3s;
+}
+
+.pizza-card:hover .pizza-image {
+  transform: scale(1.05);
 }
 
 .pizza-details {
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .pizza-details h3 {
   color: #2c3e50;
   margin-bottom: 10px;
+  font-size: 1.4rem;
 }
 
-.pizza-details p {
+.pizza-description {
   color: #666;
   margin-bottom: 15px;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.pizza-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-top: auto;
 }
 
 .pizza-price {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: #e74c3c;
   font-weight: bold;
-  margin-bottom: 15px;
+}
+
+.pizza-footer .btn {
+  width: auto;
+  padding: 10px 25px;
+  font-size: 0.95rem;
 }
 
 /* Orders Page */
