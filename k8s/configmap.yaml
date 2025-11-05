@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pizza-config
+data:
+  # MongoDB Configuration
+  MONGO_INITDB_ROOT_USERNAME: "admin"
+  MONGO_INITDB_ROOT_PASSWORD: "password123"
+
+  # Auth Service
+  AUTH_PORT: "3001"
+  AUTH_MONGODB_URI: "mongodb://admin:password123@mongodb:27017/pizza-auth?authSource=admin"
+  JWT_SECRET: "your-secret-key-change-in-production"
+
+  # Menu Service
+  MENU_PORT: "3002"
+  MENU_MONGODB_URI: "mongodb://admin:password123@mongodb:27017/pizza-menu?authSource=admin"
+
+  # Order Service
+  ORDER_PORT: "3003"
+  ORDER_MONGODB_URI: "mongodb://admin:password123@mongodb:27017/pizza-orders?authSource=admin"
+
+  # API Gateway
+  GATEWAY_PORT: "4000"
+  AUTH_SERVICE_URL: "http://auth-service:3001"
+  MENU_SERVICE_URL: "http://menu-service:3002"
+  ORDER_SERVICE_URL: "http://order-service:3003"
+
+  # Webapp
+  WEBAPP_PORT: "3005"
+  WEBAPP_AUTH_SERVICE_URL: "http://api-gateway:4000/api/auth"
+  WEBAPP_MENU_SERVICE_URL: "http://api-gateway:4000/api/menu"
+  WEBAPP_ORDER_SERVICE_URL: "http://api-gateway:4000/api/orders"
+
+  # Environment
+  NODE_ENV: "production"
