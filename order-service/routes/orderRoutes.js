@@ -23,6 +23,7 @@ router.get('/:id', getOrderById);
 
 // Update order status (Admin)
 router.put('/:id/status', updateOrderStatus);
+router.patch('/:id/status', updateOrderStatus);
 
 // Cancel order
 router.delete('/:id', cancelOrder);

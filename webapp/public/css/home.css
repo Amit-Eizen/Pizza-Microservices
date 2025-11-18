@@ -5,31 +5,75 @@
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  position: relative;
+  background:
+    linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%),
+    url('https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1920&q=80') center/cover no-repeat;
   color: white;
-  padding: 100px 20px;
+  padding: 120px 20px;
   text-align: center;
-  min-height: 500px;
+  min-height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 .hero-content {
-  max-width: 800px;
+  max-width: 850px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-title {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  font-weight: 700;
+  font-size: 3.5rem;
+  margin-bottom: 25px;
+  font-weight: 800;
+  text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.3);
+  letter-spacing: -1px;
+  animation: fadeInUp 1s ease-out 0.2s both;
 }
 
 .hero-subtitle {
-  font-size: 1.3rem;
-  margin-bottom: 40px;
-  opacity: 0.95;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  opacity: 0.98;
+  font-weight: 400;
+  text-shadow: 1px 2px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 1s ease-out 0.4s both;
 }
 
 .hero-buttons {
@@ -37,6 +81,8 @@
   gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: 40px;
+  animation: fadeInUp 1s ease-out 0.6s both;
 }
 
 /* Features Section */

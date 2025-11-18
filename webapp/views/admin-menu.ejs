@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Pizza Microservices</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/admin-menu.css">
+</head>
+<body>
+  <%- include('partials/header', { currentPage: 'admin', isLoggedIn: true }) %>
+
+  <main class="admin-container">
+    <div class="admin-header">
+      <div>
+        <h1>Menu Management</h1>
+        <p>Add, edit, or remove pizzas from the menu</p>
+      </div>
+      <div>
+        <a href="/admin" class="btn-secondary">Back to Dashboard</a>
+        <button class="btn-primary" onclick="openAddModal()">Add New Pizza</button>
+      </div>
+    </div>
+
+    <% if (locals.error) { %>
+      <div class="error-message">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <div class="menu-section">
+      <% if (pizzas && pizzas.length > 0) { %>
+        <div class="pizzas-grid">
+          <% pizzas.forEach(pizza => { %>
+            <div class="pizza-card" data-pizza-id="<%= pizza._id %>">
+              <div class="pizza-image">
+                <img src="<%= pizza.image %>" alt="<%= pizza.name %>">
+                <span class="pizza-status <%= pizza.available ? 'available' : 'unavailable' %>">
+                  <%= pizza.available ? 'Available' : 'Unavailable' %>
+                </span>
+              </div>
+
+              <div class="pizza-info">
+                <h3><%= pizza.name %></h3>
+                <p class="pizza-description"><%= pizza.description %></p>
+
+                <div class="pizza-details">
+                  <span class="pizza-category"><%= pizza.category %></span>
+                  <span class="pizza-price">$<%= pizza.price.toFixed(2) %></span>
+                </div>
+
+                <% if (pizza.ingredients && pizza.ingredients.length > 0) { %>
+                  <div class="pizza-ingredients">
+                    <strong>Ingredients:</strong>
+                    <%= pizza.ingredients.join(', ') %>
+                  </div>
+                <% } %>
+              </div>
+
+              <div class="pizza-actions">
+                <button class="btn-edit" onclick="openEditModal('<%= pizza._id %>')">Edit</button>
+                <button class="btn-delete" onclick="deletePizza('<%= pizza._id %>', '<%= pizza.name %>')">Delete</button>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="no-pizzas">
+          <p>No pizzas in the menu yet</p>
+          <button class="btn-primary" onclick="openAddModal()">Add Your First Pizza</button>
+        </div>
+      <% } %>
+    </div>
+  </main>
+
+  <!-- Add/Edit Pizza Modal -->
+  <div id="pizzaModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add New Pizza</h2>
+        <span class="close" onclick="closeModal()">&times;</span>
+      </div>
+
+      <form id="pizzaForm" onsubmit="handleSubmit(event)">
+        <input type="hidden" id="pizzaId" name="pizzaId">
+
+        <div class="form-group">
+          <label for="name">Pizza Name *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <textarea id="description" name="description" rows="3" required></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="price">Price ($) *</label>
+            <input type="number" id="price" name="price" step="0.01" min="0" required>
+          </div>
+
+          <div class="form-group">
+            <label for="category">Category *</label>
+            <select id="category" name="category" required>
+              <option value="">Select Category</option>
+              <option value="Classic">Classic</option>
+              <option value="Specialty">Specialty</option>
+              <option value="Vegetarian">Vegetarian</option>
+              <option value="Vegan">Vegan</option>
+              <option value="Meat Lovers">Meat Lovers</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Pizza Image *</label>
+          <div class="image-selection-container">
+            <div class="image-options">
+              <div class="upload-section">
+                <label for="imageFile" class="upload-btn">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  Upload Image
+                </label>
+                <input type="file" id="imageFile" accept="image/*" onchange="handleFileUpload(event)" style="display: none;">
+                <span id="fileName" class="file-name">No file chosen</span>
+              </div>
+
+              <div class="or-divider">OR</div>
+
+              <select id="imageSelect" onchange="updateImagePreview()">
+                <option value="">Select a preset image</option>
+                <option value="https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800">Pepperoni Pizza</option>
+                <option value="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800">Margherita Pizza</option>
+                <option value="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800">Cheese Pizza</option>
+                <option value="https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=800">Vegetarian Pizza</option>
+                <option value="https://images.unsplash.com/photo-1564128442383-9201fcc740eb?w=800">Meat Lovers Pizza</option>
+                <option value="https://images.unsplash.com/photo-1571407970349-bc81e7e96a47?w=800">Hawaiian Pizza</option>
+                <option value="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800">Supreme Pizza</option>
+                <option value="https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?w=800">BBQ Chicken Pizza</option>
+              </select>
+            </div>
+            <div class="image-preview">
+              <img id="previewImage" src="" alt="Preview" style="display: none;">
+              <div id="previewPlaceholder" class="preview-placeholder">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <p>Image preview will appear here</p>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" id="image" name="image" required>
+          <input type="hidden" id="uploadedFile" name="uploadedFile">
+        </div>
+
+        <div class="form-group">
+          <label for="ingredients">Ingredients (comma-separated) *</label>
+          <input type="text" id="ingredients" name="ingredients" placeholder="e.g., Cheese, Tomato Sauce, Pepperoni" required>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="available" name="available" checked>
+            Available for order
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn-primary" id="submitBtn">Add Pizza</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const pizzasData = <%- JSON.stringify(pizzas) %>;
+    let isEditMode = false;
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      const fileName = document.getElementById('fileName');
+      const previewImg = document.getElementById('previewImage');
+      const placeholder = document.getElementById('previewPlaceholder');
+      const hiddenInput = document.getElementById('image');
+      const uploadedFileInput = document.getElementById('uploadedFile');
+      const imageSelect = document.getElementById('imageSelect');
+
+      if (file) {
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+          alert('Please select an image file');
+          event.target.value = '';
+          return;
+        }
+
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+          alert('File size must be less than 5MB');
+          event.target.value = '';
+          return;
+        }
+
+        fileName.textContent = file.name;
+        imageSelect.value = '';
+
+        // Preview the image
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          previewImg.style.display = 'block';
+          placeholder.style.display = 'none';
+          hiddenInput.value = e.target.result; // Store base64 for preview
+          uploadedFileInput.value = 'true'; // Flag that we have a file upload
+        };
+        reader.readAsDataURL(file);
+      } else {
+        fileName.textContent = 'No file chosen';
+      }
+    }
+
+    function updateImagePreview() {
+      const select = document.getElementById('imageSelect');
+      const hiddenInput = document.getElementById('image');
+      const previewImg = document.getElementById('previewImage');
+      const placeholder = document.getElementById('previewPlaceholder');
+      const fileInput = document.getElementById('imageFile');
+      const fileName = document.getElementById('fileName');
+      const uploadedFileInput = document.getElementById('uploadedFile');
+
+      if (select.value) {
+        // Clear file input
+        fileInput.value = '';
+        fileName.textContent = 'No file chosen';
+        uploadedFileInput.value = '';
+
+        // Show preset image
+        previewImg.src = select.value;
+        previewImg.style.display = 'block';
+        placeholder.style.display = 'none';
+        hiddenInput.value = select.value;
+      } else {
+        previewImg.style.display = 'none';
+        placeholder.style.display = 'flex';
+        hiddenInput.value = '';
+      }
+    }
+
+    function openAddModal() {
+      isEditMode = false;
+      document.getElementById('modalTitle').textContent = 'Add New Pizza';
+      document.getElementById('submitBtn').textContent = 'Add Pizza';
+      document.getElementById('pizzaForm').reset();
+      document.getElementById('pizzaId').value = '';
+      document.getElementById('available').checked = true;
+      document.getElementById('imageSelect').value = '';
+      document.getElementById('imageFile').value = '';
+      document.getElementById('fileName').textContent = 'No file chosen';
+      document.getElementById('uploadedFile').value = '';
+      document.getElementById('previewImage').style.display = 'none';
+      document.getElementById('previewPlaceholder').style.display = 'flex';
+      document.getElementById('pizzaModal').style.display = 'block';
+    }
+
+    function openEditModal(pizzaId) {
+      isEditMode = true;
+      const pizza = pizzasData.find(p => p._id === pizzaId);
+
+      if (!pizza) {
+        alert('Pizza not found');
+        return;
+      }
+
+      document.getElementById('modalTitle').textContent = 'Edit Pizza';
+      document.getElementById('submitBtn').textContent = 'Update Pizza';
+      document.getElementById('pizzaId').value = pizza._id;
+      document.getElementById('name').value = pizza.name;
+      document.getElementById('description').value = pizza.description;
+      document.getElementById('price').value = pizza.price;
+      document.getElementById('category').value = pizza.category;
+      document.getElementById('ingredients').value = pizza.ingredients.join(', ');
+      document.getElementById('available').checked = pizza.available;
+
+      // Set image
+      document.getElementById('image').value = pizza.image;
+      document.getElementById('customImageUrl').value = pizza.image;
+      document.getElementById('imageSelect').value = '';
+      document.getElementById('previewImage').src = pizza.image;
+      document.getElementById('previewImage').style.display = 'block';
+      document.getElementById('previewPlaceholder').style.display = 'none';
+
+      document.getElementById('pizzaModal').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('pizzaModal').style.display = 'none';
+    }
+
+    async function handleSubmit(event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      const pizzaData = {
+        name: formData.get('name'),
+        description: formData.get('description'),
+        price: parseFloat(formData.get('price')),
+        category: formData.get('category'),
+        image: formData.get('image'),
+        ingredients: formData.get('ingredients').split(',').map(i => i.trim()),
+        available: formData.get('available') === 'on'
+      };
+
+      try {
+        let response;
+        if (isEditMode) {
+          const pizzaId = formData.get('pizzaId');
+          response = await fetch(`/admin/menu/${pizzaId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pizzaData)
+          });
+        } else {
+          response = await fetch('/admin/menu', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pizzaData)
+          });
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          alert(data.message);
+          window.location.reload();
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to save pizza');
+      }
+    }
+
+    async function deletePizza(pizzaId, pizzaName) {
+      if (!confirm(`Are you sure you want to delete "${pizzaName}"?`)) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/admin/menu/${pizzaId}`, {
+          method: 'DELETE'
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          alert(data.message);
+          window.location.reload();
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to delete pizza');
+      }
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('pizzaModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>

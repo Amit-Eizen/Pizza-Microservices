@@ -54,8 +54,8 @@ exports.createOrder = async (req, res) => {
       totalAmount,
       deliveryAddress,
       paymentMethod,
-      status: 'Pending',
-      paymentStatus: 'Pending'
+      status: 'pending',
+      paymentStatus: 'pending'
     });
 
     res.status(201).json({
@@ -189,14 +189,14 @@ exports.cancelOrder = async (req, res) => {
     }
 
     // Only allow cancellation if order is still pending
-    if (order.status !== 'Pending' && order.status !== 'Confirmed') {
+    if (order.status !== 'pending' && order.status !== 'preparing') {
       return res.status(400).json({
         success: false,
         message: 'Cannot cancel order that is already being prepared or delivered'
       });
     }
 
-    order.status = 'Cancelled';
+    order.status = 'cancelled';
     await order.save();
 
     res.status(200).json({
