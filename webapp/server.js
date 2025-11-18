@@ -18,14 +18,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// User middleware - fetches user info for all requests
+const { fetchUser } = require('./middleware/userMiddleware');
+app.use(fetchUser);
+
 // Routes
 const authRoutes = require('./routes/authRoutes');
 const menuRoutes = require('./routes/menuRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 app.use('/', authRoutes);
 app.use('/menu', menuRoutes);
 app.use('/orders', orderRoutes);
+app.use('/admin', adminRoutes);
 
 // Home route
 app.get('/', (req, res) => {

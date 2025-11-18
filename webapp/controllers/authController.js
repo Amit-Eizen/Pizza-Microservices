@@ -44,7 +44,12 @@ exports.handleLogin = async (req, res) => {
       // Store user info in session (optional, or send to frontend)
       console.log('User logged in:', response.data.user.email);
 
-      res.redirect('/');
+      // Redirect based on user role
+      if (response.data.user.role === 'admin') {
+        res.redirect('/admin');
+      } else {
+        res.redirect('/');
+      }
     } else {
       throw new Error('Invalid response from Auth Service');
     }
@@ -85,8 +90,12 @@ exports.handleRegister = async (req, res) => {
 
       console.log('User registered:', response.data.user.email);
 
-      // Redirect to home after successful registration
-      res.redirect('/');
+      // Redirect based on user role (though new registrations are typically 'user' role)
+      if (response.data.user.role === 'admin') {
+        res.redirect('/admin');
+      } else {
+        res.redirect('/');
+      }
     } else {
       throw new Error('Invalid response from Auth Service');
     }
