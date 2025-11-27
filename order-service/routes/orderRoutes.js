@@ -6,7 +6,8 @@ const {
   getUserOrders,
   getOrderById,
   updateOrderStatus,
-  cancelOrder
+  cancelOrder,
+  deleteOrder
 } = require('../controllers/orderController');
 
 // Create new order
@@ -25,7 +26,10 @@ router.get('/:id', getOrderById);
 router.put('/:id/status', updateOrderStatus);
 router.patch('/:id/status', updateOrderStatus);
 
-// Cancel order
-router.delete('/:id', cancelOrder);
+// Cancel order (for users)
+router.post('/:id/cancel', cancelOrder);
+
+// Delete order (admin only - permanent deletion)
+router.delete('/:id', deleteOrder);
 
 module.exports = router;

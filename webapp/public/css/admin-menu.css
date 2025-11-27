@@ -28,13 +28,13 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #c92127 100%);
   color: white;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
 }
 
 .btn-secondary {
@@ -141,7 +141,7 @@
 .pizza-price {
   font-size: 22px;
   font-weight: 700;
-  color: #667eea;
+  color: #ff6b35;
 }
 
 .pizza-ingredients {
@@ -318,8 +318,8 @@
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
 }
 
 .checkbox-label {
@@ -370,19 +370,19 @@
   justify-content: center;
   gap: 10px;
   padding: 12px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #c92127 100%);
   color: white;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
   font-size: 14px;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
 }
 
 .upload-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
 }
 
 .upload-btn svg {
@@ -440,7 +440,7 @@
 }
 
 .image-preview:hover {
-  border-color: #667eea;
+  border-color: #ff6b35;
   background: #edf2f7;
 }
 

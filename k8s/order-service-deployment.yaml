@@ -25,6 +25,8 @@ spec:
           value: "3003"
         - name: MONGODB_URI
           value: "mongodb+srv://pizzaAdmin:Pizza123!!@cluster0.iwlr4zb.mongodb.net/pizza-microservices?retryWrites=true&w=majority"
+        - name: MENU_SERVICE_URL
+          value: "http://menu-service:3002/api/menu"
         - name: NODE_ENV
           value: "production"
         livenessProbe:

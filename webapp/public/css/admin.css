@@ -32,18 +32,18 @@
 .btn-menu-manage {
   display: inline-block;
   padding: 12px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #c92127 100%);
   color: white;
   text-decoration: none;
   border-radius: 8px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
 }
 
 .btn-menu-manage:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
 }
 
 .error-message {
@@ -84,7 +84,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(90deg, #ff6b35 0%, #c92127 100%);
 }
 
 .order-card:hover {
@@ -101,6 +101,12 @@
   border-bottom: 2px solid #f0f0f0;
 }
 
+.order-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .order-header h3 {
   color: #2d3748;
   margin: 0;
@@ -112,6 +118,29 @@
   color: #a0aec0;
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+.btn-delete-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #dc2626;
+  border: 2px solid #fecaca;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-delete-small:hover {
+  background: #dc2626;
+  color: white;
+  border-color: #dc2626;
+  transform: scale(1.1);
 }
 
 .order-customer {
@@ -150,7 +179,7 @@
   border-radius: 6px;
   font-size: 0.95rem;
   transition: all 0.2s ease;
-  border-left: 3px solid #667eea;
+  border-left: 3px solid #ff6b35;
 }
 
 .order-items li:hover {
@@ -161,7 +190,7 @@
 .order-total {
   font-size: 1.3rem;
   font-weight: 800;
-  color: #667eea;
+  color: #ff6b35;
   margin-bottom: 1.5rem;
   padding: 1rem 1.2rem;
   border-top: 2px solid #e2e8f0;
@@ -204,24 +233,24 @@
 }
 
 .timeline-step.active .step-circle {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-color: #667eea;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #ff6b35 0%, #c92127 100%);
+  border-color: #ff6b35;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
 }
 
 .timeline-step.current .step-circle {
   background: #fff;
-  border-color: #667eea;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2), 0 4px 12px rgba(102, 126, 234, 0.3);
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.2), 0 4px 12px rgba(255, 107, 53, 0.3);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
   0%, 100% {
-    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2), 0 4px 12px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.2), 0 4px 12px rgba(255, 107, 53, 0.3);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(102, 126, 234, 0.15), 0 6px 16px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 0 0 8px rgba(255, 107, 53, 0.15), 0 6px 16px rgba(255, 107, 53, 0.4);
   }
 }
 
@@ -235,12 +264,12 @@
 }
 
 .timeline-step.active .step-label {
-  color: #667eea;
+  color: #ff6b35;
   font-weight: 700;
 }
 
 .timeline-step.current .step-label {
-  color: #5a67d8;
+  color: #c92127;
   font-weight: 800;
 }
 
@@ -254,8 +283,8 @@
 }
 
 .timeline-line.active {
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  background: linear-gradient(90deg, #ff6b35 0%, #c92127 100%);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
 }
 
 /* Order Actions */
@@ -268,7 +297,7 @@
 }
 
 .btn-update-status {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #c92127 100%);
   color: white;
   border: none;
   padding: 0.9rem 2.2rem;
@@ -277,7 +306,7 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -299,12 +328,12 @@
 
 .btn-update-status:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
 
 .btn-update-status:active {
   transform: translateY(0) scale(0.98);
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
 }
 
 .status-complete {

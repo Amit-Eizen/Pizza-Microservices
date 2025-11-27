@@ -55,7 +55,7 @@ exports.createOrder = async (req, res) => {
       deliveryAddress,
       paymentMethod,
       status: 'pending',
-      paymentStatus: 'pending'
+      paymentStatus: 'Pending'
     });
 
     res.status(201).json({
@@ -203,6 +203,33 @@ exports.cancelOrder = async (req, res) => {
       success: true,
       message: 'Order cancelled successfully',
       data: order
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+};
+
+// Delete order (admin only - permanent deletion)
+exports.deleteOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found'
+      });
+    }
+
+    await Order.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: 'Order deleted successfully'
     });
   } catch (error) {
     res.status(500).json({
