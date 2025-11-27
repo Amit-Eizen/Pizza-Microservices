@@ -27,13 +27,27 @@ exports.getOrdersPage = async (req, res) => {
         const pizzaName = firstItem ? firstItem.pizzaName : 'Unknown';
         const quantity = order.items.reduce((sum, item) => sum + item.quantity, 0);
 
+        // Format date properly (DD/MM/YYYY)
+        let formattedDate = 'Invalid Date';
+        try {
+          const dateObj = new Date(order.createdAt);
+          if (!isNaN(dateObj.getTime())) {
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const year = dateObj.getFullYear();
+            formattedDate = `${day}/${month}/${year}`;
+          }
+        } catch (err) {
+          console.error('Date parsing error:', err);
+        }
+
         return {
           id: order._id,
           pizzaName: pizzaName,
           quantity: quantity,
           totalPrice: order.totalAmount,
           status: order.status,
-          createdAt: new Date(order.createdAt).toLocaleDateString('en-GB'),
+          createdAt: formattedDate,
           items: order.items,
           deliveryAddress: order.deliveryAddress,
           paymentMethod: order.paymentMethod,

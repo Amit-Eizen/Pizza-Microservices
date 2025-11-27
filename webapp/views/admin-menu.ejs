@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %> - Pizza Microservices</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/admin.css">
   <link rel="stylesheet" href="/css/admin-menu.css">
 </head>
@@ -47,7 +47,7 @@
 
                 <div class="pizza-details">
                   <span class="pizza-category"><%= pizza.category %></span>
-                  <span class="pizza-price">$<%= pizza.price.toFixed(2) %></span>
+                  <span class="pizza-price">₪<%= pizza.price.toFixed(2) %></span>
                 </div>
 
                 <% if (pizza.ingredients && pizza.ingredients.length > 0) { %>
@@ -97,7 +97,7 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="price">Price ($) *</label>
+            <label for="price">Price (₪) *</label>
             <input type="number" id="price" name="price" step="0.01" min="0" required>
           </div>
 

@@ -20,10 +20,10 @@ body {
 
 /* Navbar */
 .navbar {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #c92127 100%);
   color: white;
   padding: 1rem 0;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(201, 33, 39, 0.3);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -90,9 +90,9 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b35 0%, #c92127 100%);
   color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
   border: none;
   position: relative;
   overflow: hidden;
@@ -115,7 +115,7 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
 }
 
 .btn-large {
